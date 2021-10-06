@@ -6,31 +6,46 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Client {
 	public static void main(String[] args) {
-		
-		//클라이언트에서 사용자로부터 입력받아서 서버로 보내고
 		Scanner scan = new Scanner(System.in);
 		
+		
 		try(Socket socket = new Socket("172.30.1.19", 7777);
-				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))){
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))){
 			
-			while(true) {
-				String msg = br.readLine(); 
-				System.out.println(">>> : "+msg);
+			
+			System.out.println(br.readLine());
+			System.out.println(br.readLine());
+			System.out.println(br.readLine());
+
+			int main = scan.nextInt();
+			bw.write(main);
+			bw.flush();
+//			switch(main) {
+//				case 1: 
+//					System.out.println(br.readLine());
+//					System.out.println(br.readLine());
+//					String id = scan.nextLine();
+//					bw.write(id);
+//					bw.flush();
+//					
+//					System.out.println(br.readLine());
+//					System.out.println(br.readLine());
+//					String pw = scan.nextLine();
+//					bw.write(pw);
+//					bw.flush();
+//			}
+			
 				
-				String str = scan.nextLine();
-				bw.write(str);
-				bw.newLine();
-				bw.flush();
-			}
-			
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		}
-
+	}
 }
